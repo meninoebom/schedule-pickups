@@ -39,6 +39,23 @@ App.controller('HomeCtrl', function( $scope, $rootScope, $sce, $firebaseArray ) 
 
 App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService ){
   $scope.data = restaurantService.getRestaurant($stateParams.restaurantId);
+  $scope.order = {
+    pickupTime: "",
+    menuItems: {},
+    pastDue: false
+  };
+  for(menuItemId in $scope.data.menuItems) {
+    $scope.order.menuItems[menuItemId] = 0;
+  }
+  var customer = '123';
+  var restaurantId = $stateParams.restaurantId;
+  var fbRef = new Firebase("https://fiery-inferno-5692.firebaseio.com/"+customer+"/orders/"+restaurantId);
+  $scope.createOrder = function() {
+    console.log($scope.order);
+    // fbRef.set({
+    //   foo: "bar"
+    // });
+  }
    
 })
 

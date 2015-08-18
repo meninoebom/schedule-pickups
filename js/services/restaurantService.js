@@ -4,19 +4,19 @@ App.factory('restaurantService', function(  ){
       "r1": {
         "name": "Chicken Run",
         "menuItems": {
-          "mi1": {
+          1: {
             "name": "Chicken Sandwich",
             "price": "5.00"
           },
-          "mi2": {
+          2: {
             "name": "Chicken Salad",
             "price": "5.00"
           },
-          "mi3": {
+          3: {
             "name": "Waffle Fries",
             "price": "5.00"
           },
-          "mi4": {
+          4: {
             "name": "Lemonade",
             "price": "5.00"
           }
@@ -25,19 +25,19 @@ App.factory('restaurantService', function(  ){
       "r2": {
         "name": "Burger Queen",
         "menuItems": {
-          "mi1": {
+          1: {
             "name": "Classic Burger",
             "price": "5.00"
           },
-          "mi2": {
+          2: {
             "name": "Bacon Burger",
             "price": "5.00"
           },
-          "mi3": {
+          3: {
             "name": "Double Pattie Burger",
             "price": "5.00"
           },
-          "mi4": {
+          4: {
             "name": "Veggie Burger",
             "price": "5.00"
           }
@@ -46,19 +46,19 @@ App.factory('restaurantService', function(  ){
       "r3": {
         "name": "The Sub Station",
         "menuItems": {
-          "mi1": {
+          1: {
             "name": "Turkey Clue",
             "price": "5.00"
           },
-          "mi2": {
+          2: {
             "name": "Italian Sub",
             "price": "5.00"
           },
-          "mi3": {
+          3: {
             "name": "Veggie Classic",
             "price": "5.00"
           },
-          "mi4": {
+          4: {
             "name": "Roast Beast",
             "price": "5.00"
           }
@@ -67,19 +67,19 @@ App.factory('restaurantService', function(  ){
       "r4": {
         "name": "Pizza House",
         "menuItems": {
-          "mi1": {
+          1: {
             "name": "Veggie Lovers Pizza",
             "price": "5.00"
           },
-          "mi2": {
+          2: {
             "name": "Pepporoni Pizza",
             "price": "5.00"
           },
-          "mi3": {
+          3: {
             "name": "Cheese Lovers Pizza",
             "price": "5.00"
           },
-          "mi4": {
+          4: {
             "name": "Pineapple Pizza",
             "price": "5.00"
           }

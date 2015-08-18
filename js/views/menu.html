@@ -1,4 +1,20 @@
-<div ng-repeat="item in data.menuItems">
-    {{item.name}}
-    {{item.price}}
+<div class="row menu-restaurant-name-container">
+    <h4 class="restaurant-name">{{data.name}}</h4>
+</div>
+
+<div class="row menu-instructional-text-container">
+    <h4 class="menu-instruction-cart-empty">Your cart is empty</h4>
+</div>
+
+<div class="row menu-instructional-text-container">
+    <h4 class="menu-instructoion-schedule-pickup">Schedule a pickup</h4>
+    <button class="btn btn-default" ng-click="createOrder()">Button</button>
+</div>
+
+<div class="menu-item" ng-repeat="(key, item) in data.menuItems">
+    <img src="{{item.imgUrl}}"/>
+    <span class="menu-item-name">{{item.name}}</span>
+    <span class="menu-item-price">{{item.price}}</span>
+    <div counter value="order.menuItems[key]" min="0" max="5" step="1" editable></div>
+<p></p>
 </div>
