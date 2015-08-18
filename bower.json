@@ -1,0 +1,16 @@
+{
+  "name": "schedule_pickups",
+  "version": "0.0.0",
+  "homepage": "https://github.com/meninoebom/schedule-pickups",
+  "authors": [
+    "Brandon Brown <brandon.brown@ymail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

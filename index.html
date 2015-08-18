@@ -1,9 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="bower_components/bootstrap-css-only/css/bootstrap.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
+    <body ng-app="schedulePickups">
+
+
+        <div class="main-header" id="content" tabindex="-1">
+          <div class="container">
+          <h2><a ui-sref="home">Arun's Cafetefia Pickup App</a></h2>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row">               
+                <div ui-view></div>
+            </div>
+        </div>
+
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+        <script src="bower_components/firebase/firebase.js"></script>
+        <script src="bower_components/angularfire/dist/angularfire.js"></script>
+        
+        <!-- Create App-->
+        <script src="js/index.js"></script>
+
+        <!-- Controllers-->
+
+        <!-- Services -->
+        <script src="js/services/restaurantService.js"></script>
+        <!-- Directives -->
         
     </body>
 </html>

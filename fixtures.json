@@ -1,0 +1,93 @@
+{
+  "restaurants": {
+    "r1": {
+      "name": "Chicken Run",
+      "menuItems": {
+        "mi1": {
+          "name": "Chicken Sandwich",
+          "price": "5.00"
+        },
+        "mi2": {
+          "name": "Chicken Salad",
+          "price": "5.00"
+        },
+        "mi3": {
+          "name": "Waffle Fries",
+          "price": "5.00"
+        },
+        "mi4": {
+          "name": "Lemonade",
+          "price": "5.00"
+        }
+      }
+    },
+    "r2": {
+      "name": "Burger Queen",
+      "menuItems": {
+        "mi1": {
+          "name": "Classic Burger",
+          "price": "5.00"
+        },
+        "mi2": {
+          "name": "Bacon Burger",
+          "price": "5.00"
+        },
+        "mi3": {
+          "name": "Double Pattie Burger",
+          "price": "5.00"
+        },
+        "mi4": {
+          "name": "Veggie Burger",
+          "price": "5.00"
+        }
+      }
+    },
+    "r3": {
+      "name": "The Sub Station",
+      "menuItems": {
+        "mi1": {
+          "name": "Turkey Clue",
+          "price": "5.00"
+        },
+        "mi2": {
+          "name": "Italian Sub",
+          "price": "5.00"
+        },
+        "mi3": {
+          "name": "Veggie Classic",
+          "price": "5.00"
+        },
+        "mi4": {
+          "name": "Roast Beast",
+          "price": "5.00"
+        }
+      }
+    },
+    "r4": {
+      "name": "Pizza House",
+      "menuItems": {
+        "mi1": {
+          "name": "Veggie Lovers Pizza",
+          "price": "5.00"
+        },
+        "mi2": {
+          "name": "Pepporoni Pizza",
+          "price": "5.00"
+        },
+        "mi3": {
+          "name": "Cheese Lovers Pizza",
+          "price": "5.00"
+        },
+        "mi4": {
+          "name": "Pineapple Pizza",
+          "price": "5.00"
+        }
+      }
+    }
+  },
+  "customers": {
+    "c1": {
+      "name": "Arun"
+    }
+  }
+}
