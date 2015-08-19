@@ -1,28 +1,43 @@
-
 <div class="row menu-restaurant-name-container">
-    <h4 class="restaurant-name">{{data.name}}</h4>
+    <div class="container">
+        <h4 class="restaurant-name">Your pickup order from {{data.name}}</h4></div>
 </div>
 
-<div class="row menu-instructional-text-container" ng-show="emptyTray()">
-    <h4 class="menu-instruction-cart-empty">Your tray is empty</h4>
+<div class="row menu-instructional-text-container menu-instructional-text-container-start" ng-show="emptyTray()">
+    <div class="container">
+        <h4 class="menu-instruction">Your tray is empty</h4></div>
 </div>
 
-<div class="row menu-instructional-text-container" ng-show="!emptyTray() && !orderScheduled">
-    <h4 class="menu-instructoion-schedule-pickup">Schedule a pickup</h4>
-    <timepicker ng-model="timepickerVal" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
-    <button class="btn btn-default" ng-click="createOrder()">Button</button>
+<div class="row menu-instructional-text-container menu-instructional-text-container-schedule" ng-show="!emptyTray() && !orderScheduled">
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group"> <span class="menu-when">When: </span></div>
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputAmount">Enter the time you want your food ready for pickup</label>
+                <timepicker ng-model="timepickerVal" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
+            </div>
+            <button class="btn btn-primary" ng-click="createOrder()">Schedule a pickup</button>
+        </form>
+    </div>
 </div>
 
-<div class="row menu-instruction-text-container" ng-show="orderScheduled">
-    Your has been sceduled for 
-    <timer countdown="10041" max-time-unit="'minute'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+<div class="row menu-instructional-text-container menu-instructional-text-container-success" ng-show="orderScheduled">
+    <div class="container">Your {{data.name}} order will be ready for pick up in
+        <timer countdown="10041" max-time-unit="'minute'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+        <button class="btn btn-danger" ng-click="cancelOrder()">Cancel your order</button>
+    </div>
 </div>
 
-<ul>
-<li class="menu-item" ng-repeat="(key, item) in data.menuItems">
-    <img src="{{item.imgUrl}}"/>
-    <span class="menu-item-name">{{item.name}}</span>
-    <span class="menu-item-price">{{item.price}}</span>
-    <div counter value="currentOrder.menuItems[key]" min="0" max="5" step="1" editable></div>
-</li>
-</ul>
+<div class="row" ng-show="!orderScheduled">
+    <div class="container">
+            <div class="col-sm-10 col-sm-6 col-md-3  menu-item clearfix" ng-repeat="(key, item) in data.menuItems">
+                <img class="img-responsive" src="https://img.trycaviar.com/YtEuWKOC6EIz-OAR5cI9_eKe8pA=/789x315/https://s3.amazonaws.com/trycaviar.com/offers/1345/49003-201504230134.jpg" />
+                <div class="col-xs-7">
+                    <h4 class="menu-item-name">{{item.name}}</h4>
+                    <div class="menu-item-price">{{item.price}}</div>
+                </div>
+                <div class="col-xs-5 menu-item-quantity"><span  counter value="currentOrder.menuItems[key]" min="0" max="5" step="1" editable></span></div>
+            </div>
+            <div class="col-xs-0 col-sm-2 col-md-0"></div>
+    </div>
+</div>
