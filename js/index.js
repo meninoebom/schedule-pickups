@@ -40,56 +40,37 @@ App.controller('HomeCtrl', function( $scope, $rootScope, $sce, $firebaseArray ) 
 App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ){
   $scope.data = restaurantService.getRestaurant($stateParams.restaurantId);
   
-  $scope.order = {
-    pickupTime: "",
+  $scope.currentOrder = {
+    pickupTime: null,
     menuItems: {},
     pastDue: false
   };
 
   for(menuItemId in $scope.data.menuItems) {
-    $scope.order.menuItems[menuItemId] = 0;
+    $scope.currentOrder.menuItems[menuItemId] = 0;
   }
 
-  var customer = '123', restaurantId = $stateParams.restaurantId;
-  var fbRef = new Firebase("https://fiery-inferno-5692.firebaseio.com/"+customer+"/orders/"+restaurantId);
-  $scope.createOrder = function() {
-    console.log($scope.order);
-    // fbRef.set({
-    //   foo: "bar"
-    // });
-  }
-
-$scope.mytime = new Date();
-
+  $scope.timepickerVal = new Date();
   $scope.hstep = 1;
-  $scope.mstep = 15;
-
-  $scope.options = {
-    hstep: [1, 2, 3],
-    mstep: [1, 5, 10, 15, 25, 30]
-  };
-
-  $scope.ismeridian = true;
-  $scope.toggleMode = function() {
-    $scope.ismeridian = ! $scope.ismeridian;
-  };
-
-  $scope.update = function() {
-    var d = new Date();
-    d.setHours( 14 );
-    d.setMinutes( 0 );
-    $scope.mytime = d;
-  };
+  $scope.mstep = 5;
 
   $scope.changed = function () {
     $log.log('Time changed to: ' + $scope.mytime);
   };
 
-  $scope.clear = function() {
-    $scope.mytime = null;
-  };
+  var customer = '123'
+    , restaurantId = $stateParams.restaurantId
+    , fbRef = new Firebase("https://fiery-inferno-5692.firebaseio.com/orders/");
+  $scope.orders = $firebaseArray(fbRef);
+  
+  $scope.createOrder = function() {
+    console.log($scope.orders);
+    $scope.currentOrder.pickupTime = $scope.timepickerVal.getTime();
+    $scope.orders.$add($scope.currentOrder);
+  }
+
    
-})
+});
 
 // App.controller('InputMenuCtrl', function( $scope, $rootScope, $sce, $firebaseObject ) {
 
