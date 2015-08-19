@@ -18,35 +18,56 @@ App.config(function( $stateProvider, $urlRouterProvider ){
   })
 
   $stateProvider
-  .state('inputMenu', {
-    url: '/input_menu',
-    templateUrl: '/js/views/input_menu.html',
-    controller: 'InputMenuCtrl'
+  .state('restaurants', {
+    url: '/restaurants',
+    templateUrl: '/js/views/restaurants.html'
   })
 
-  $stateProvider
-  .state('pos', {
-    url: '/pos',
-    templateUrl: '/js/views/pos.html',
-    controller: 'PosCtrl'
-  })
+  // $stateProvider
+  // .state('pos-landing-page', {
+  //   url: '/pos',
+  //   templateUrl: '/js/views/pos-landing-page.html',
+  // })
+
+
+  // $stateProvider
+  // .state('pos-dashboard', {
+  //   url: '/pos/:restaurantId',
+  //   templateUrl: '/js/views/pos.html',
+  //   controller: 'PosCtrl'
+  // })
 
 });
 
-App.controller('HomeCtrl', function( $scope, $rootScope, $sce, $firebaseArray ) {
+App.controller('HomeCtrl', function( $scope, $state, $rootScope ) {
+  $scope.error = false;
+  $scope.customerName = '';
+
+  $scope.continue = function() {
+    if($scope.customerName === '') {
+      $scope.error = true;
+      return;
+    }
+    $scope.error = false;
+    $rootScope.customerName = $scope.customerName;
+    $state.go('restaurants', { 'customerName': $scope.customerName });
+  }
 
 });
 
-App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ){
-
-  $scope.data = restaurantService.getRestaurant( $stateParams.restaurantId );
+App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebaseArray, restaurantService, $log ){
+  var restaurantId = $stateParams.restaurantId;
+  $scope.data = restaurantService.getRestaurant( restaurantId );
   
+  // set up current order obj
   $scope.currentOrder = {
     pickupTime: null,
     menuItems: {},
+    customerName: '',
     pastDue: false
   };
 
+  // set the menu items on the currentOrder obj
   for( menuItemId in $scope.data.menuItems ) {
     $scope.currentOrder.menuItems[menuItemId] = 0;
   }
@@ -55,26 +76,34 @@ App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, resta
   $scope.hstep = 1;
   $scope.mstep = 5;
   $scope.orderScheduled = false;
-  var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/" );
+  var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/"+restaurantId+"/" );
   $scope.orders = $firebaseArray(fbRef);
   
   $scope.createOrder = function() {
     $scope.pickupTimeObj = moment( $scope.timepickerVal ).toObject();
+
+    // set the pick up time and customer name on the current order obj
     $scope.currentOrder.pickupTime = moment( $scope.timepickerVal ).format();
+    $scope.currentOrder.customerName = $rootScope.customerName;
+
+    // add the currentOrder obj to firebase ref
     $scope.orders.$add( $scope.currentOrder )
       .then(function(ref) {
         var id = ref.key();
-        console.log("added record with id " + id);
-        $scope.currentOrderRecord = $scope.orders.$indexFor(id); // returns location in the array
+        console.log( "added record with id " + id );
+        $scope.currentOrderRecord = $scope.orders.$indexFor( id ); // returns location in the array
         $scope.orderScheduled = true;
       });
+
+    // set up the time display string for the countdown directive  
+    $scope.countdownEndTime = new Date( $scope.currentOrder.pickupTime ).getTime();
   }
  
   $scope.cancelOrder = function() {
     $scope.orders.$remove( $scope.currentOrderRecord )
-      .then(function(ref){
+      .then(function( ref ){
         var id = ref.key();
-        console.log("removed record with id " + id);
+        console.log( "removed record with id " + id );
         $scope.orderScheduled = false;
       });
   }
@@ -85,20 +114,25 @@ App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, resta
     }
     return true;
   }
-
    
 });
 
-// App.controller('InputMenuCtrl', function( $scope, $rootScope, $sce, $firebaseObject ) {
+App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ) {
+  var restaurantId = $stateParams.restaurantId;
+  $scope.data = restaurantService.getRestaurant( restaurantId );
+  var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/"+restaurantId+"/" );
+  $scope.orders = $firebaseArray( fbRef );
 
-//   var ref = new Firebase("https://fiery-inferno-5692.firebaseIO.com");
-//   $scope.menuItems = $firebaseArray(ref);
+});
 
-// });
 
-// App.controller('PosCtrl', function( $scope, $rootScope, $sce, $firebaseObject ) {
 
-//   var ref = new Firebase("https://fiery-inferno-5692.firebaseIO.com");
-//   $scope.menuItems = $firebaseArray(ref);
 
-// });
+
+
+
+
+
+
+
+
