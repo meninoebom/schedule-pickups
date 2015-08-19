@@ -63,8 +63,7 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
   $scope.currentOrder = {
     pickupTime: null,
     menuItems: {},
-    customerName: '',
-    pastDue: false
+    customerName: ''  
   };
 
   // set the menu items on the currentOrder obj
@@ -122,6 +121,19 @@ App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restau
   $scope.data = restaurantService.getRestaurant( restaurantId );
   var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/"+restaurantId+"/" );
   $scope.orders = $firebaseArray( fbRef );
+
+  $scope.getCountDownEndTime = function( dateString ) {
+    return new Date( dateString ).getTime();
+  }
+
+  $scope.getFormattedEndTime = function( dateString  ) {
+    return moment( dateString ).format('h:mm:ss a')
+  }
+
+  $scope.pastDue = function( dateString ) {
+    return new Date( dateString ).getTime() < Date.now();
+  }
+
 });
 
 

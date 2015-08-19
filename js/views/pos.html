@@ -1,12 +1,18 @@
 <div class="container">
 <h4>Dashboard for {{data.name}}</h4>
-<ul>
-    <li ng-repeat="(orderNum, order) in orders" ng-class="order.pastDue">
-    {{order.customerName}}{{order.pickupTime}}{{order.menuItems}}
-   <!--      {{order.pickupTime}} {{order.customerName}} {{order.menuItem}}  
-        <p>Pick-up Time: <timer end-time="countdownEndTime" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
-        </p> -->
-    </li>
-</ul>
+<table class="pos-order-table">
+    <thead>
+        <td>Customer Name</td>
+        <td>Menu Items</td>
+        <td>Pick Up Time</td>
+        <td>Time Remaining</td>
+    </thead>
+    <tr ng-repeat="(orderNum, order) in orders" ng-class="{'past-due': pastDue(order.pickupTime)}">
+        <td>{{order.customerName}}</td>
+        <td>{{order.menuItems}}</td>
+        <td>{{getFormattedEndTime(order.pickupTime)}}</td>
+        <td><timer end-time="getCountDownEndTime(order.pickupTime)" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></td>
+    </tr>
+<table>
 
 </div>
