@@ -61,8 +61,22 @@ App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, resta
   $scope.createOrder = function() {
     $scope.pickupTimeObj = moment( $scope.timepickerVal ).toObject();
     $scope.currentOrder.pickupTime = moment( $scope.timepickerVal ).format();
-    $scope.orders.$add( $scope.currentOrder );
-    $scope.orderScheduled = true;
+    $scope.orders.$add( $scope.currentOrder )
+      .then(function(ref) {
+        var id = ref.key();
+        console.log("added record with id " + id);
+        $scope.currentOrderRecord = $scope.orders.$indexFor(id); // returns location in the array
+        $scope.orderScheduled = true;
+      });
+  }
+ 
+  $scope.cancelOrder = function() {
+    $scope.orders.$remove( $scope.currentOrderRecord )
+      .then(function(ref){
+        var id = ref.key();
+        console.log("removed record with id " + id);
+        $scope.orderScheduled = false;
+      });
   }
 
   $scope.emptyTray = function() {
