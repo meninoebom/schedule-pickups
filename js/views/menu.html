@@ -1,33 +1,20 @@
-<div class="menu-restaurant-name-container">
-    <div class="container">
-        <h4 class="restaurant-name">Schedule a pickup order from {{data.name}}</h4>
-    </div>
-</div>
-
-<div class="menu-instructional-text-container menu-instructional-text-container-start" ng-show="emptyTray()">
-    <div class="container">
-        <p class="menu-instruction">Your tray is empty</p>
-    </div>
-</div>
-
-<div class="menu-instructional-text-container menu-instructional-text-container-schedule" ng-show="!emptyTray() && !orderScheduled">
+<div class="menu-instructional-text-container menu-instructional-text-container-schedule" ng-show="!orderScheduled">
     <div class="container">
         <form class="form-inline">
-            <div class="form-group"> <span class="menu-when">When: </span></div>
+            <div class="form-group"> <span class="menu-when">When </span></div>
             <div class="form-group">
                 <label class="sr-only" for="exampleInputAmount">Enter the time you want your food ready for pickup</label>
                 <timepicker ng-model="timepickerVal" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
             </div>
-            <button class="btn btn-primary" ng-click="createOrder()">Schedule a pickup</button>
+            <button class="btn btn-primary" ng-disabled="emptyTray()" ng-click="createOrder()">Schedule a pickup from {{data.name}}</button>
         </form>
     </div>
 </div>
 
-<div class="menu-instructional-text-container menu-instructional-text-container-success" ng-show="orderScheduled">
+<div class="menu-instructional-text-container menu-instructional-text-container-success clearfix" ng-show="orderScheduled">
     <div class="container">
-        <p class="menu-instruction">Your order from <span style="color: #222">{{data.name}}</span> will be ready for pick up in
-        <timer end-time="countdownEndTime" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></p>
-        <button class="btn btn-danger" ng-click="cancelOrder()">Cancel your order</button>
+        <span class="menu-instruction">{{customerName}}, your order from <span class="menu-instruction-restaurant-name">{{data.name}}</span> will be ready for pick up in <span class="pickup-countdown"><timer end-time="countdownEndTime" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></span>
+        <button class="btn btn-danger cancel-order-btn" ng-click="cancelOrder()">Cancel your order</button></span>
     </div>
 </div>
 

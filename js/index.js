@@ -31,7 +31,6 @@ App.config(function( $stateProvider, $urlRouterProvider ){
     templateUrl: '/js/views/pos-landing-page.html',
   })
 
-
   $stateProvider
   .state('pos-dashboard', {
     url: '/pos/:restaurantId',
@@ -42,14 +41,6 @@ App.config(function( $stateProvider, $urlRouterProvider ){
 });
 
 App.controller('HomeCtrl', function( $scope, $state, $rootScope ){
-
-  // $rootScope.$on('$stateChangeStart',
-  //     function(event, toState, toParams, fromState, fromParams){
-  //        if(!$rootScope.customerName) {
-  //           event.preventDefault();
-  //           $state.go('home');
-  //         }
-  //     });
 
   $scope.error = false;
   $scope.customerName = '';
@@ -103,7 +94,7 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
 
     // set the pick up time and customer name on the current order obj
     $scope.currentOrder.pickupTime = moment( $scope.timepickerVal ).format();
-    $scope.currentOrder.customerName = $rootScope.customerName;
+    $scope.currentOrder.customerName = $scope.customerName = $rootScope.customerName;
 
     // add the currentOrder obj to firebase ref
     $scope.orders.$add( $scope.currentOrder )
@@ -113,6 +104,7 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
         $scope.currentOrderRecord = $scope.orders.$indexFor( id ); // returns location in the array
         $scope.orderScheduled = true;
       });
+
 
     // set up the time display string for the countdown directive  
     $scope.countdownEndTime = new Date( $scope.currentOrder.pickupTime ).getTime();
