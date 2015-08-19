@@ -1,27 +1,10 @@
-<div class="row current-orders"></div>
-    <p>Current Orders</p>
-<div class="row available">
-    <h2>Available Now</h2>
-    <ul class="available-restaurant-list">
-        <li>
-            <a href="#/menus/r1">
-                Chicken Run
-            </a>
-        </li>
-        <li>
-            <a href="#menus/r2">
-                Burger Queen
-            </a>
-        </li>
-        <li>
-            <a href="#/menus/r3">
-                The Sub Station
-            </a>
-        </li>
-        <li>
-            <a href="#/menus/r4">
-                Pizza House
-            </a>
-        </li>
-    </ul>
+<div class="container ">
+    <h1>Continue as a guest</h1>
+    <form ng-disabled>
+        <div class="form-group" ng-class="{'has-error' : error}">
+            <label for="nameInput">Name</label>
+            <input ng-model="customerName" type="name" class="form-control" id="nameInput" placeholder="Jane Doe">
+        </div>
+        <button ng-click="continue()" class="btn btn-primary">Continue</button>
+    </form>
 </div>

@@ -1,14 +1,16 @@
-<div class="row menu-restaurant-name-container">
+<div class="menu-restaurant-name-container">
     <div class="container">
-        <h4 class="restaurant-name">Your pickup order from {{data.name}}</h4></div>
+        <h4 class="restaurant-name">Your pickup order from {{data.name}}</h4>
+    </div>
 </div>
 
-<div class="row menu-instructional-text-container menu-instructional-text-container-start" ng-show="emptyTray()">
+<div class="menu-instructional-text-container menu-instructional-text-container-start" ng-show="emptyTray()">
     <div class="container">
-        <h4 class="menu-instruction">Your tray is empty</h4></div>
+        <p class="menu-instruction">Your tray is empty</p>
+    </div>
 </div>
 
-<div class="row menu-instructional-text-container menu-instructional-text-container-schedule" ng-show="!emptyTray() && !orderScheduled">
+<div class="menu-instructional-text-container menu-instructional-text-container-schedule" ng-show="!emptyTray() && !orderScheduled">
     <div class="container">
         <form class="form-inline">
             <div class="form-group"> <span class="menu-when">When: </span></div>
@@ -21,14 +23,15 @@
     </div>
 </div>
 
-<div class="row menu-instructional-text-container menu-instructional-text-container-success" ng-show="orderScheduled">
-    <div class="container">Your {{data.name}} order will be ready for pick up in
-        <timer countdown="10041" max-time-unit="'minute'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+<div class="menu-instructional-text-container menu-instructional-text-container-success" ng-show="orderScheduled">
+    <div class="container">
+        <p class="menu-instruction">Your {{data.name}} order will be ready for pick up in
+        <timer end-time="countdownEndTime" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></p>
         <button class="btn btn-danger" ng-click="cancelOrder()">Cancel your order</button>
     </div>
 </div>
 
-<div class="row" ng-show="!orderScheduled">
+<div class="container" ng-show="!orderScheduled">
     <div class="container">
             <div class="col-sm-10 col-sm-6 col-md-3  menu-item clearfix" ng-repeat="(key, item) in data.menuItems">
                 <img class="img-responsive" src="https://img.trycaviar.com/YtEuWKOC6EIz-OAR5cI9_eKe8pA=/789x315/https://s3.amazonaws.com/trycaviar.com/offers/1345/49003-201504230134.jpg" />

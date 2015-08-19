@@ -23,19 +23,19 @@ App.config(function( $stateProvider, $urlRouterProvider ){
     templateUrl: '/js/views/restaurants.html'
   })
 
-  // $stateProvider
-  // .state('pos-landing-page', {
-  //   url: '/pos',
-  //   templateUrl: '/js/views/pos-landing-page.html',
-  // })
+  $stateProvider
+  .state('pos-landing-page', {
+    url: '/pos',
+    templateUrl: '/js/views/pos-landing-page.html',
+  })
 
 
-  // $stateProvider
-  // .state('pos-dashboard', {
-  //   url: '/pos/:restaurantId',
-  //   templateUrl: '/js/views/pos.html',
-  //   controller: 'PosCtrl'
-  // })
+  $stateProvider
+  .state('pos-dashboard', {
+    url: '/pos/:restaurantId',
+    templateUrl: '/js/views/pos.html',
+    controller: 'PosCtrl'
+  })
 
 });
 
@@ -122,7 +122,6 @@ App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restau
   $scope.data = restaurantService.getRestaurant( restaurantId );
   var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/"+restaurantId+"/" );
   $scope.orders = $firebaseArray( fbRef );
-
 });
 
 
