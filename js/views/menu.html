@@ -3,15 +3,21 @@
     <h4 class="restaurant-name">{{data.name}}</h4>
 </div>
 
-<div class="row menu-instructional-text-container">
-    <h4 class="menu-instruction-cart-empty">Your cart is empty</h4>
+<div class="row menu-instructional-text-container" ng-show="emptyTray()">
+    <h4 class="menu-instruction-cart-empty">Your tray is empty</h4>
 </div>
 
-<div class="row menu-instructional-text-container">
+<div class="row menu-instructional-text-container" ng-show="!emptyTray() && !orderScheduled">
     <h4 class="menu-instructoion-schedule-pickup">Schedule a pickup</h4>
     <timepicker ng-model="timepickerVal" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="true"></timepicker>
     <button class="btn btn-default" ng-click="createOrder()">Button</button>
 </div>
+
+<div class="row menu-instruction-text-container" ng-show="orderScheduled">
+    Your has been sceduled for 
+    <timer countdown="10041" max-time-unit="'minute'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer>
+</div>
+
 <ul>
 <li class="menu-item" ng-repeat="(key, item) in data.menuItems">
     <img src="{{item.imgUrl}}"/>

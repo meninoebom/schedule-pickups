@@ -1,4 +1,4 @@
-var App = angular.module( 'schedulePickups', ['ui.router', 'ui.bootstrap', 'firebase'] );
+var App = angular.module( 'schedulePickups', ['ui.router', 'ui.bootstrap', 'firebase', 'timer'] );
 
 App.config(function( $stateProvider, $urlRouterProvider ){
   $urlRouterProvider.otherwise('/');
@@ -38,7 +38,8 @@ App.controller('HomeCtrl', function( $scope, $rootScope, $sce, $firebaseArray ) 
 });
 
 App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ){
-  $scope.data = restaurantService.getRestaurant($stateParams.restaurantId);
+
+  $scope.data = restaurantService.getRestaurant( $stateParams.restaurantId );
   
   $scope.currentOrder = {
     pickupTime: null,
@@ -46,27 +47,29 @@ App.controller('MenuCtrl', function( $scope, $stateParams, $firebaseArray, resta
     pastDue: false
   };
 
-  for(menuItemId in $scope.data.menuItems) {
+  for( menuItemId in $scope.data.menuItems ) {
     $scope.currentOrder.menuItems[menuItemId] = 0;
   }
 
   $scope.timepickerVal = new Date();
   $scope.hstep = 1;
   $scope.mstep = 5;
-
-  $scope.changed = function () {
-    $log.log('Time changed to: ' + $scope.mytime);
-  };
-
-  var customer = '123'
-    , restaurantId = $stateParams.restaurantId
-    , fbRef = new Firebase("https://fiery-inferno-5692.firebaseio.com/orders/");
+  $scope.orderScheduled = false;
+  var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/" );
   $scope.orders = $firebaseArray(fbRef);
   
   $scope.createOrder = function() {
-    console.log($scope.orders);
-    $scope.currentOrder.pickupTime = $scope.timepickerVal.getTime();
-    $scope.orders.$add($scope.currentOrder);
+    $scope.pickupTimeObj = moment( $scope.timepickerVal ).toObject();
+    $scope.currentOrder.pickupTime = moment( $scope.timepickerVal ).format();
+    $scope.orders.$add( $scope.currentOrder );
+    $scope.orderScheduled = true;
+  }
+
+  $scope.emptyTray = function() {
+    for ( key in $scope.currentOrder.menuItems ) {
+      if( $scope.currentOrder.menuItems[key] > 0 ) return false;
+    }
+    return true;
   }
 
    
