@@ -39,7 +39,7 @@ App.config(function( $stateProvider, $urlRouterProvider ){
 
 });
 
-App.controller('HomeCtrl', function( $scope, $state, $rootScope ) {
+App.controller('HomeCtrl', function( $scope, $state, $rootScope ){
   $scope.error = false;
   $scope.customerName = '';
 
@@ -62,13 +62,16 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
   // set up current order obj
   $scope.currentOrder = {
     pickupTime: null,
-    menuItems: {},
+    // menuItems: {},
+    menuItems: [],
     customerName: ''  
   };
 
   // set the menu items on the currentOrder obj
-  for( menuItemId in $scope.data.menuItems ) {
-    $scope.currentOrder.menuItems[menuItemId] = 0;
+  for( menuItemId in $scope.data.menuItems ){
+    // $scope.currentOrder.menuItems[menuItemId] = 0;
+    $scope.currentOrder.menuItems.push(0);
+
   }
 
   $scope.timepickerVal = new Date();
@@ -108,7 +111,7 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
   }
 
   $scope.emptyTray = function() {
-    for ( key in $scope.currentOrder.menuItems ) {
+    for ( key in $scope.currentOrder.menuItems ){
       if( $scope.currentOrder.menuItems[key] > 0 ) return false;
     }
     return true;
@@ -116,22 +119,26 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
    
 });
 
-App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ) {
+App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restaurantService, $log ){
   var restaurantId = $stateParams.restaurantId;
   $scope.data = restaurantService.getRestaurant( restaurantId );
   var fbRef = new Firebase( "https://fiery-inferno-5692.firebaseio.com/orders/"+restaurantId+"/" );
   $scope.orders = $firebaseArray( fbRef );
 
-  $scope.getCountDownEndTime = function( dateString ) {
+  $scope.getCountDownEndTime = function( dateString ){
     return new Date( dateString ).getTime();
   }
 
-  $scope.getFormattedEndTime = function( dateString  ) {
+  $scope.getFormattedEndTime = function( dateString  ){
     return moment( dateString ).format('h:mm:ss a')
   }
 
-  $scope.pastDue = function( dateString ) {
+  $scope.pastDue = function( dateString ){
     return new Date( dateString ).getTime() < Date.now();
+  }
+
+  $scope.displayMenuItem = function( ind ){
+    if($scope.data.menuItems[ind]) return $scope.data.menuItems[ind]['name'];
   }
 
 });

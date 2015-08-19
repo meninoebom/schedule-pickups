@@ -1,15 +1,22 @@
 <div class="container">
-<h4>Dashboard for {{data.name}}</h4>
+<h4>Admin Dashboard for {{data.name}}</h4>
 <table class="pos-order-table">
     <thead>
+        <td>Order Number</td>
         <td>Customer Name</td>
         <td>Menu Items</td>
         <td>Pick Up Time</td>
         <td>Time Remaining</td>
     </thead>
     <tr ng-repeat="(orderNum, order) in orders" ng-class="{'past-due': pastDue(order.pickupTime)}">
+        <td>{{order.$id}}</td>
         <td>{{order.customerName}}</td>
-        <td>{{order.menuItems}}</td>
+        <td>
+            <p ng-repeat="item in order.menuItems track by $index" ng-show="item > 0">
+                {{item}} {{displayMenuItem($index)}}
+            </p>
+
+        </td>
         <td>{{getFormattedEndTime(order.pickupTime)}}</td>
         <td><timer end-time="getCountDownEndTime(order.pickupTime)" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></td>
     </tr>
