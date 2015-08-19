@@ -1,6 +1,6 @@
 <div class="menu-restaurant-name-container">
     <div class="container">
-        <h4 class="restaurant-name">Your pickup order from {{data.name}}</h4>
+        <h4 class="restaurant-name">Schedule a pickup order from {{data.name}}</h4>
     </div>
 </div>
 
@@ -25,7 +25,7 @@
 
 <div class="menu-instructional-text-container menu-instructional-text-container-success" ng-show="orderScheduled">
     <div class="container">
-        <p class="menu-instruction">Your {{data.name}} order will be ready for pick up in
+        <p class="menu-instruction">Your order from <span style="color: #222">{{data.name}}</span> will be ready for pick up in
         <timer end-time="countdownEndTime" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></p>
         <button class="btn btn-danger" ng-click="cancelOrder()">Cancel your order</button>
     </div>
@@ -44,3 +44,4 @@
             <div class="col-xs-0 col-sm-2 col-md-0"></div>
     </div>
 </div>
+

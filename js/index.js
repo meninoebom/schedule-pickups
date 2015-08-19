@@ -1,6 +1,8 @@
 var App = angular.module( 'schedulePickups', ['ui.router', 'ui.bootstrap', 'firebase', 'timer'] );
 
+
 App.config(function( $stateProvider, $urlRouterProvider ){
+
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -40,6 +42,15 @@ App.config(function( $stateProvider, $urlRouterProvider ){
 });
 
 App.controller('HomeCtrl', function( $scope, $state, $rootScope ){
+
+  // $rootScope.$on('$stateChangeStart',
+  //     function(event, toState, toParams, fromState, fromParams){
+  //        if(!$rootScope.customerName) {
+  //           event.preventDefault();
+  //           $state.go('home');
+  //         }
+  //     });
+
   $scope.error = false;
   $scope.customerName = '';
 
@@ -55,22 +66,22 @@ App.controller('HomeCtrl', function( $scope, $state, $rootScope ){
 
 });
 
-App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebaseArray, restaurantService, $log ){
+App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebaseArray, restaurantService, $modal, $log ){
   var restaurantId = $stateParams.restaurantId;
   $scope.data = restaurantService.getRestaurant( restaurantId );
   
   // set up current order obj
   $scope.currentOrder = {
     pickupTime: null,
-    // menuItems: {},
-    menuItems: [],
-    customerName: ''  
+    menuItems: {},
+    // menuItems: [],
+    customerName: ""  
   };
 
   // set the menu items on the currentOrder obj
   for( menuItemId in $scope.data.menuItems ){
-    // $scope.currentOrder.menuItems[menuItemId] = 0;
-    $scope.currentOrder.menuItems.push(0);
+    $scope.currentOrder.menuItems[menuItemId] = 0;
+    // $scope.currentOrder.menuItems.push(0);
 
   }
 
@@ -82,6 +93,12 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
   $scope.orders = $firebaseArray(fbRef);
   
   $scope.createOrder = function() {
+
+    if(!$rootScope.customerName) {
+      $scope.openModal('lg');
+      return;
+    }
+
     $scope.pickupTimeObj = moment( $scope.timepickerVal ).toObject();
 
     // set the pick up time and customer name on the current order obj
@@ -116,6 +133,20 @@ App.controller('MenuCtrl', function( $scope, $rootScope, $stateParams, $firebase
     }
     return true;
   }
+
+  $scope.openModal = function (size) {
+      var modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/js/views/modal.html',
+        controller: 'ModalInstanceCtrl',
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+    });
+  }
    
 });
 
@@ -139,6 +170,24 @@ App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restau
 
   $scope.displayMenuItem = function( ind ){
     if($scope.data.menuItems[ind]) return $scope.data.menuItems[ind]['name'];
+  }
+
+});
+
+
+App.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items, $rootScope) {
+
+  $scope.error = false;
+  $scope.customerName = '';
+
+  $scope.continue = function() {
+    if($scope.customerName === '') {
+      $scope.error = true;
+      return;
+    }
+    $scope.error = false;
+    $rootScope.customerName = $scope.customerName;
+    $modalInstance.dismiss('cancel');
   }
 
 });

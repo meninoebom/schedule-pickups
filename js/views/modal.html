@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h1>Continue as a guest</h1></div>
+<div class="modal-body">
+    <form ng-disabled>
+        <div class="form-group" ng-class="{'has-error' : error}">
+            <label for="nameInput">Name</label>
+            <input ng-model="customerName" type="name" class="form-control" id="nameInput" placeholder="Jane Doe">
+        </div>
+        <button ng-click="continue()" class="btn btn-primary">Continue</button>
+    </form>
+</div>
