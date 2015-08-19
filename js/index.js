@@ -164,6 +164,17 @@ App.controller('PosCtrl', function( $scope, $stateParams, $firebaseArray, restau
     if($scope.data.menuItems[ind]) return $scope.data.menuItems[ind]['name'];
   }
 
+  $scope.recordPickUpTime = function( order ){
+    console.log($scope.orders.$indexFor(order.$id));
+    var d = new Date();
+    var now = d.getTime();
+    order.pickupTime = moment( now ).format();
+    $scope.orders.$save(order).then(function(ref){
+      console.log('saved')
+    });
+    // order.pickupTime = new Date.now();
+  }
+
 });
 
 

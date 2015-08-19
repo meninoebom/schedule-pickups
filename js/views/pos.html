@@ -7,6 +7,7 @@
         <td>Menu Items</td>
         <td>Pick Up Time</td>
         <td>Time Remaining</td>
+        <td>Picked Up</td>
     </thead>
     <tr ng-repeat="(orderNum, order) in orders" ng-class="{'past-due': pastDue(order.pickupTime)}">
         <td>{{order.$id}}</td>
@@ -19,6 +20,9 @@
         </td>
         <td>{{getFormattedEndTime(order.pickupTime)}}</td>
         <td><timer end-time="getCountDownEndTime(order.pickupTime)" max-time-unit="'hour'" interval="1000">{{mminutes}} minute{{minutesS}}, {{sseconds}} second{{secondsS}}</timer></td>
+        <td>
+          <button type="button" class="btn btn-primary" ng-model="order.pickedUp" btn-checkbox btn-checkbox-true="true" ng-click="recordPickUpTime(order)" btn-checkbox-false="false" ng-disabled="order.pickedUp">{{order.pickedUp === true ? "Closed" : "Complete"}}</button>
+        </td>
     </tr>
 <table>
 
