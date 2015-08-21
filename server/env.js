@@ -11,7 +11,9 @@ module.exports = {
 	},
 	production: {
 		rootPath: rootPath,
-		database: '',
+		// heroku addons:create heroku-postgresql:hobby-basic
+		// heroku config -s | grep HEROKU_POSTGRESQL
+		database: 'postgres://gcnxnpeyfgagrt:k5SVZEGTIHTfaaRfl_Jhm4tCF_@ec2-54-83-58-191.compute-1.amazonaws.com:5432/db69q95it9o79k',
 		port: process.env.PORT || 80
 	}
 };

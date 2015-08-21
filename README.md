@@ -42,12 +42,17 @@ The customer path starts at http://localhost:3000/
 
 The POS path starts at http://localhost:3000/#/pos/
 
+## Log in with facebook
+
+Hit `http://localhost:3000/connect/facebook`
+
 ## Deploy to heroku
 
 ```sh
 $ heroku create schedule-pickups
 $ heroku config:set NODE_ENV=production
-$ heroku addons:create heroku-postgresql:hobby-dev
+$ heroku addons:create heroku-postgresql:hobby-basic
+$ heroku config -s | grep HEROKU_POSTGRESQL  // add the output of this to server/env.js
 $ git add -A
 $ git commit -m 'init commit'
 $ git push heroku master
