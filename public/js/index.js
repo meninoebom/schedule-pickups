@@ -1,8 +1,21 @@
-var App = angular.module( 'schedulePickups', ['ui.router', 'ui.bootstrap', 'firebase', 'timer'] );
+var App = angular.module( 'schedulePickups', [
+  'ui.router',
+  'ui.bootstrap',
+  'firebase',
+  'timer',
+  'satellizer'
+] );
 
 
-App.config(function( $stateProvider, $urlRouterProvider ){
+App.config(function( $stateProvider, $urlRouterProvider, $authProvider ){
 
+  // Facebook auth config
+  $authProvider.facebook({
+    clientId: '1599895130275825'
+  });
+
+
+  // Routes
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -40,20 +53,20 @@ App.config(function( $stateProvider, $urlRouterProvider ){
 
 });
 
-App.controller('HomeCtrl', function( $scope, $state, $rootScope ){
+App.controller('HomeCtrl', function( $scope, $state, $rootScope, $auth ){
 
-  $scope.error = false;
-  $scope.customerName = '';
+  $scope.authenticate = function(provider) {
+    $auth.authenticate(provider).then(function(res){
+      // facebook profile
+      console.log(res.data.profile);
 
-  $scope.continue = function() {
-    if($scope.customerName === '') {
-      $scope.error = true;
-      return;
-    }
-    $scope.error = false;
-    $rootScope.customerName = $scope.customerName;
-    $state.go('restaurants', { 'customerName': $scope.customerName });
-  }
+      // access token
+      console.log(res.data.token);
+
+      $rootScope.customerName = res.data.profile.name;
+      $state.go('restaurants', { 'customerName': $scope.customerName });
+    });
+  };
 
 });
 
