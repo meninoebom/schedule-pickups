@@ -46,8 +46,10 @@ The POS path starts at http://localhost:3000/#/pos/
 
 ```sh
 $ heroku create schedule-pickups
-// add and commit changes
+$ heroku config:set NODE_ENV=production
+$ heroku addons:create heroku-postgresql:hobby-dev
+$ git add -A
+$ git commit -m 'init commit'
 $ git push heroku master
-$ heroku addons:add heroku-postgresql:dev
-
+$ heroku ps:scale web=1
 ```

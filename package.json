@@ -13,9 +13,13 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bower": "^1.4.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower cache clean && bower install"
   },
   "repository": {
     "type": "git",
