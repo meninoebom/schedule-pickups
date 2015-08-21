@@ -14,10 +14,18 @@ Build a point of sale(POS) system for the cafeteria cashier which will list the 
 
 # Getting Started
 
+Install tools we need
 ```sh
 $ brew install node
-$ npm i -g bower nodemon
-$ cd schedule-pickings && npm i
+$ brew install postgres
+$ brew install heroku-toolbelt
+$ npm i -g bower nodemon // nodemon will restart the server whenever you make server side changes
+```
+
+Set up postgres locally and start the server
+```
+$ cd schedule-pickings
+$ npm i && bower install
 $ nodemon server
 ```
 
@@ -33,3 +41,13 @@ The customer path starts at http://localhost:3000/
 ## POS System Views
 
 The POS path starts at http://localhost:3000/#/pos/
+
+## Deploy to heroku
+
+```sh
+$ heroku create schedule-pickups
+// add and commit changes
+$ git push heroku master
+$ heroku addons:add heroku-postgresql:dev
+
+```

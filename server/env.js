@@ -1,5 +1,4 @@
 // environment config
-// database set to NaN for fun with future bugs
 
 var path = require('path'),
 	rootPath = path.normalize(__dirname + '/../../');
@@ -7,12 +6,12 @@ var path = require('path'),
 module.exports = {
 	development: {
 		rootPath: rootPath,
-		database: NaN,
+		database: 'postgres://user:pass@example.com:5432/dbname',	// 'postgres://user:pass@example.com:5432/dbname'
 		port: process.env.PORT || 3000
 	},
 	production: {
 		rootPath: rootPath,
-		database: NaN,
+		database: '',
 		port: process.env.PORT || 80
 	}
 };

@@ -2,12 +2,27 @@
 var express = require('express'),
 	bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
+    Sequelize = require('sequelize'),
     session = require('express-session'),
 	app = express();
 
 // ENVIRONMENT CONFIG
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 	envConfig = require('./server/env')[env];
+
+// DATABASE
+if(env === 'development'){
+	var db_username = null;
+	var db_password = null;
+
+	var sequelize = new Sequelize('database', db_username, db_password, {
+	  host: 'localhost',
+	  dialect: 'postgres'
+	});
+} else if (env === 'production'){
+	
+}
+
 
 // EXPRESS CONFIG
 app.use(bodyParser.json());
