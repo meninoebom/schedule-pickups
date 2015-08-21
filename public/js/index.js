@@ -9,22 +9,11 @@ var App = angular.module( 'schedulePickups', [
 
 App.config(function( $stateProvider, $urlRouterProvider, $authProvider ){
 
-  // Facebook login options
-  $authProvider.facebook({
-    url: '/auth/facebook',
-    authorizationEndpoint: 'https://www.facebook.com/v2.3/dialog/oauth',
-    redirectUri: (window.location.origin || window.location.protocol + '//' + window.location.host) + '/',
-    scope: 'email',
-    scopeDelimiter: ',',
-    requiredUrlParams: ['display', 'scope'],
-    display: 'popup',
-    type: '2.0',
-    popupOptions: { width: 580, height: 400 }
-  });
-
+  // Facebook auth config
   $authProvider.facebook({
     clientId: '1599895130275825'
   });
+
 
   // Routes
   $urlRouterProvider.otherwise('/');
@@ -66,21 +55,17 @@ App.config(function( $stateProvider, $urlRouterProvider, $authProvider ){
 
 App.controller('HomeCtrl', function( $scope, $state, $rootScope, $auth ){
 
-  $scope.error = false;
-  $scope.customerName = '';
-
-  $scope.continue = function() {
-    if($scope.customerName === '') {
-      $scope.error = true;
-      return;
-    }
-    $scope.error = false;
-    $rootScope.customerName = $scope.customerName;
-    $state.go('restaurants', { 'customerName': $scope.customerName });
-  };
-
   $scope.authenticate = function(provider) {
-    $auth.authenticate(provider);
+    $auth.authenticate(provider).then(function(res){
+      // facebook profile
+      console.log(res.data.profile);
+
+      // access token
+      console.log(res.data.token);
+
+      $rootScope.customerName = res.data.profile.name;
+      $state.go('restaurants', { 'customerName': $scope.customerName });
+    });
   };
 
 });

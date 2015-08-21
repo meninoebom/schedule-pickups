@@ -37,19 +37,24 @@ module.exports = function(app){
 			  return res.status(500).send({ message: accessToken.error.message });
 			}
 
-			console.log(response);
 			console.log('------------');
 			console.log(accessToken);
+			console.log('------------');
 
 			// Step 2. Retrieve profile information about the current user.
-			request.get({ url: graphApiUrl, qs: accessToken, json: true }, function(err, response, profile) {
+			request.get({
+				url: graphApiUrl,
+				qs: accessToken,
+				json: true 
+			}, function(err, response, profile) {
 				if (response.statusCode !== 200) {
 					return res.status(500).send({ message: profile.error.message });
 				}
-				if (req.headers.authorization) {
-					console.log('Found facebook user!');
-					console.log(profile);
-				}
+
+				res.send({
+					token: accessToken,
+					profile: profile
+				});
 		    });
 		});
 	});

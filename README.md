@@ -44,7 +44,11 @@ The POS path starts at http://localhost:3000/#/pos/
 
 ## Log in with facebook
 
-Hit `http://localhost:3000/connect/facebook`
+Local facebook config options:
+
+![](http://i.imgur.com/YFkswNz.png)
+
+![](http://i.imgur.com/xERDOW8.png)
 
 ## Deploy to heroku
 
