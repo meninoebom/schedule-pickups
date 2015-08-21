@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "bower": "^1.4.1",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "grant-express": "^3.4.0",
